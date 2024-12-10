@@ -5,9 +5,12 @@ function App() {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [messages, setMessages] = useState<string[]>([]);
   const [input, setInput] = useState<string>("");
+  
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8080");
+    const wsUrl = import.meta.env.VITE_WS_URL;
+    console.log(wsUrl);
+    const socket = new WebSocket(wsUrl);
     socket.onopen = () => {
       console.log("Connected");
       setSocket(socket);
@@ -38,7 +41,7 @@ function App() {
           ))}
         </ul>
       ) : (
-        <p>Loading...</p>
+        <p>Connecting to the server! Please wait...</p>
       )}
       <input
         type="text"
@@ -51,10 +54,11 @@ function App() {
         onChange={(e) => {
           setInput(e.target.value);
         }}
+        className="bg-gray-50 px-2 py-1 rounded-lg"
       />
       <button
         onClick={handleSendMessage}
-        className="mt-2 ml-2 "
+        className="mt-2 ml-2 border rounded-lg px-2 py-1"
       >
         Send
       </button>
