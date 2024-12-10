@@ -9,6 +9,8 @@ const wss = new WebSocketServer({ server: httpServer });
 
 wss.on('connection', function connection(socket) {
     socket.on('error', console.error);
+
+    log("Sever started!");
   
     socket.on('message', function message(data, isBinary) {
       wss.clients.forEach(function each(client) {
